@@ -3,7 +3,9 @@ import pandas as pd                                         #needed for datafram
 import matplotlib.pyplot as plt                             #needed for plot
 import printcovid as pc                                     #WvdS: separating processing and printing functions
 import wworld as wv                                         #WvdS: world view
-
+import pathlib as pl                                        #needed to browse the filesystem
+debug = False
+#======================================================================================================================
 def calc_data (country_df, country_ref_df):
     country_df['P_cp'] = round(country_df['Confirmed'] / country_df['Population'] * 100, 4)  #% corona % of polulation
     country_df['P_dc'] = round(country_df['Deaths'] / country_df['Confirmed'] * 100, 4)      #% corona % deaths
@@ -13,8 +15,15 @@ def calc_data (country_df, country_ref_df):
     #print (country_df)
     return country_df
 
-reference_df = pd.read_csv('data/reference.csv')                                 #read reference data
-covid_df = pd.read_csv('data/countries-aggregated.csv',parse_dates=['Date'])     #read country aggregated csv
+path = pl.Path.cwd().parent / 'covid-19' / 'data' / 'reference.csv'
+if debug == True : print("Loading :", path)
+reference_df = pd.read_csv(path)                                                 #read reference data
+#reference_df = pd.read_csv('data/reference.csv')                                 #read reference data
+
+path = pl.Path.cwd().parent / 'covid-19' / 'data' / 'countries-aggregated.csv'
+if debug == True : print("Loading :", path)
+covid_df = pd.read_csv(path,parse_dates=['Date'])                                #read country aggregated csv
+#covid_df = pd.read_csv('data/countries-aggregated.csv',parse_dates=['Date'])     #read country aggregated csv
 
 country1 = input("What country are we looking for: ")
 while not (covid_df['Country']==country1).any():
