@@ -5,7 +5,7 @@ import pandas as pd                                         #needed for datafram
 import pathlib as pl                                        #needed to browse the filesystem
 debug = False
 #=============================================================================================
-path = pl.Path.cwd().parent / 'covid-19' / 'data' / 'worldwide-aggregated.csv'
+path = pl.Path.cwd().parent / 'covid-19' / 'data' / 'worldwide-aggregate.csv'
 if debug == True : print("Loading :", path)
 wview_df = pd.read_csv(path,parse_dates=['Date'])
 if __name__ == "__main__":    # execute only if run as a script
